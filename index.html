@@ -1,11 +1,12 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" id="top">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Coffee Shop</title>
   <link rel="shortcut icon" href="/assets/images/coffeshop logo.png" type="image/x-icon">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="/assets/css/styles.css">
@@ -26,7 +27,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#index">Início</a>
+            <a class="nav-link active" aria-current="page" href="#top">Início</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#about">Sobre Nós</a>
@@ -38,10 +39,11 @@
             <a class="nav-link" href="#local">Local</a>
           </li>
         </ul>
-        <form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Buscar</button>
-        </form>
+        <form class="d-flex" role="search" id="searchForm">
+          <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search" id="searchInput">
+          <button class="btn btn-outline-success" type="button" onclick="performSearch()">Buscar</button>
+      </form>
+      
       </div>
     </div>
   </nav>
@@ -488,6 +490,109 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
     crossorigin="anonymous"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Obtém todas as opções de navegação
+      var navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+
+      // Adiciona um ouvinte de evento de clique a cada opção
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+          // Remove a classe 'active' de todas as opções
+          navLinks.forEach(function (otherLink) {
+            otherLink.classList.remove('active');
+          });
+
+          // Adiciona a classe 'active' à opção clicada
+          link.classList.add('active');
+        });
+      });
+    });
+  </script>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      // Adiciona uma animação suave ao clicar nos links da navegação
+      $("a").on('click', function (event) {
+        if (this.hash !== "") {
+          // Impede o comportamento padrão ao clicar no link
+          event.preventDefault();
+
+          // Armazena a âncora (hash)
+          var hash = this.hash;
+
+          // Anima o scroll suavemente
+          $('html, body').animate({
+            scrollTop: $(hash).offset().top
+          }, 800, function () {
+            // Adiciona a âncora ao URL após a animação
+            window.location.hash = hash;
+          });
+        }
+      });
+    });
+  </script>
+
+<script>
+  function performSearch() {
+      var searchInput = document.getElementById('searchInput').value.toLowerCase();
+      var sections = document.querySelectorAll('section'); // Altere para a classe ou tag que deseja buscar
+
+      sections.forEach(function(section) {
+          var sectionText = section.innerText.toLowerCase();
+
+          if (sectionText.includes(searchInput)) {
+              section.style.display = 'block'; // Mostra a seção correspondente
+          } else {
+              section.style.display = 'none'; // Esconde as seções que não correspondem
+          }
+      });
+  }
+</script>
+
+<!-- Seção de script existente (se houver) -->
+<script>
+  // Se houver outros scripts, mantenha-os aqui
+</script>
+
+<!-- Seção de script existente (se houver) -->
+<script>
+  // Se houver outros scripts, mantenha-os aqui
+</script>
+
+<!-- Novo script adicionado -->
+<script>
+  function performSearch() {
+      var searchInput = document.getElementById('searchInput').value.toLowerCase();
+      var sections = document.querySelectorAll('section'); // Altere para a classe ou tag que deseja buscar
+
+      sections.forEach(function(section) {
+          var sectionText = section.innerText.toLowerCase();
+
+          if (sectionText.includes(searchInput)) {
+              section.style.display = 'block'; // Mostra a seção correspondente
+          } else {
+              section.style.display = 'none'; // Esconde as seções que não correspondem
+          }
+      });
+  }
+
+  document.getElementById('searchForm').addEventListener('submit', function(event) {
+      var searchInput = document.getElementById('searchInput').value.trim();
+
+      // Verifica se o campo de pesquisa está vazio
+      if (!searchInput) {
+          event.preventDefault(); // Impede o envio do formulário se o campo estiver vazio
+          performSearch(); // Executa a busca
+      }
+  });
+</script>
+<!-- Fim do novo script -->
+
+
 </body>
 
 </html>
